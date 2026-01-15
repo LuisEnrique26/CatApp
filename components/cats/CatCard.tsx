@@ -30,8 +30,8 @@ export function CatCard({ imageUrl }: CatCardProps) {
 
 const styles = StyleSheet.create({
     card: {
-        height: 180,
-        width: 180,
+        height: 160,
+        width: 160,
         borderRadius: 15,
         overflow: 'hidden',
         justifyContent: 'center',
