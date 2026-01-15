@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 const api = axios.create({
   baseURL: 'https://api.thecatapi.com/v1',
   headers: {
-    'x-api-key': 'live_4NUoAery69SCSZ2upgBDs4dpQUn6ze0PPxv2jilHnKuCQ4Wj1Y3AipcuEkSI6Uwc'
+    'x-api-key': process.env.CAT_API_KEY || '',
   }
 });
 
