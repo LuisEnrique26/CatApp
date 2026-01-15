@@ -2,10 +2,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 
 const api = axios.create({
-  baseURL: 'https://api.thecatapi.com/v1',
-  headers: {
-    'x-api-key': process.env.CAT_API_KEY || '',
-  }
+  baseURL: process.env.EXPO_PUBLIC_API_URL,
 });
 
 export const useRandomCat = () => {
@@ -17,15 +14,18 @@ export const useRandomCat = () => {
         setLoading(true);
         setError(null);
         try {
-            const response = await api.get('/images/0XYvRd7oD');
+            const response = await api.get(`/images/search?api_key=${process.env.EXPO_PUBLIC_API_KEY}`);
+
+            //console.log("Api Response: ", response.data);
+            
             const catData = response.data[0];
-            const breed = catData.breeds[0];
+            console.log("Cat Data: ", catData);
+            
 
             setCat({
-                name: breed.name,
-                origin: breed.origin,
-                description: breed.description,
+                id: catData.id,
                 imageUrl: catData.url,
+                breeds: catData.breeds,
             });
         } catch (err) {
             setError('Failed to fetch cat data');
