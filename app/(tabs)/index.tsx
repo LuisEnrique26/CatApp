@@ -1,13 +1,13 @@
 import { CatCard } from "@/components/cats/CatCard";
 import { useRandomCat } from "@/hooks/useCatApi";
-import { ActivityIndicator, FlatList, StyleSheet, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, FlatList, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ThemedText } from '../../components/themed-text';
 import { ThemedView } from '../../components/themed-view';
 
 export default function HomeScreen() {
 
-  const { cats, loading, error, refresh } = useRandomCat();
+  const { cats, loading, error, loadMoreCats } = useRandomCat();
 
   return (
     <SafeAreaView style={styles.container}>
@@ -30,25 +30,15 @@ export default function HomeScreen() {
           numColumns={2}
           contentContainerStyle={{ padding: 16 }}
           columnWrapperStyle={{ justifyContent: 'space-around', marginBottom: 15 }}
-          ListFooterComponent={
-            cats.length > 0 ?
-              <TouchableOpacity onPress={refresh}>
-                <View
-                  style={styles.button}
-                >
-                  <ThemedText
-                    style={{
-                      ...styles.title,
-                      fontSize: 22,
-                      marginTop: 0,
-                    }}
-                  >
-                    Load more cats
-                  </ThemedText>
-                </View>
-              </TouchableOpacity>
-              : null
-          }
+          onEndReached={loadMoreCats}
+          onEndReachedThreshold={0.5}
+          initialNumToRender={10}
+          windowSize={5}
+          maxToRenderPerBatch={10}
+          removeClippedSubviews={true}
+          ListFooterComponent={() => (
+            loading ? <ActivityIndicator size="large" color="#2b2385" /> : null
+          )}
         />
           
       </ThemedView>

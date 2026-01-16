@@ -1,11 +1,12 @@
 import { BlurView } from 'expo-blur';
+import { memo } from 'react';
 import { Image, StyleSheet, View } from 'react-native';
 
 interface CatCardProps {
     imageUrl: string;
 }
 
-export function CatCard({ imageUrl }: CatCardProps) {
+export const CatCard = memo( function CatCard({ imageUrl }: CatCardProps) {
     return (
         <View style={styles.card}>
             <Image
@@ -26,7 +27,8 @@ export function CatCard({ imageUrl }: CatCardProps) {
             <Image source={{ uri: imageUrl }} style={styles.image} />
         </View>
     )
-}
+});
+
 
 const styles = StyleSheet.create({
     card: {
